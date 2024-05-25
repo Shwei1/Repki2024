@@ -1,3 +1,3 @@
-from tkinter import *
-back = Tk()
-back.mainloop
+from window import window
+
+window.mainloop()
