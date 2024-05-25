@@ -54,7 +54,7 @@ class Board:
                 x2, y2 = x1 + CELL_SIZE, y1 + CELL_SIZE
                 if self.map[i][j] == 0:
                     color = "white"
-                if self.map[i][j] == 1:
+                if self.map[i][j] > 0:
                     color = "blue"
                 self.canvas.create_rectangle(
                     x1, y1, x2, y2,
@@ -84,6 +84,7 @@ if __name__ == "__main__":
     board1 = Board()
     board2 = Board()
     board1.draw_field()
-    board1.add_ship(Ship((1, 1), 1, 4))
+    board1.add_ship(Ship((2, 3), 1, 4))
+    board1.add_ship(Ship((0, 0), 1, 4))
     board2.draw_field()
     window.mainloop()
