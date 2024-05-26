@@ -1,13 +1,16 @@
 from constants import *
 from window import window
+from field import field
 import tkinter as tk
 from ship import Ship
+from manager import *
+
 
 class Board:
     def __init__(self):
         self.window = window
         self.canvas = self.create_canvas()
-        self.map = FIELD.copy()
+        self.map = field
 
         '''
         Відтворює ігрову дошку, розміщує всі кораблі, перевіряє влучення,
@@ -17,9 +20,12 @@ class Board:
         '''
 
         self.size = SIZE_BOARD
-        self._ships = []
+        self.ships = {1: 0, 2: 0, 3: 0, 4: 0}
 
     def create_canvas(self):
+        """
+        Створює канвас з ігровою дошкою
+        """
         field_width = len(FIELD[0])
         field_height = len(FIELD)
         self.window.config(
@@ -34,15 +40,21 @@ class Board:
 
         canvas = tk.Canvas(
             self.window,
-            width=field_width,
-            height=field_height,
+            width=600,
+            height=300,
             bg='gray'
         )
         canvas.pack(fill=tk.BOTH, expand=True)
 
         return canvas
 
+    def map_bringer(self):
+        return self.map
+
     def draw_field(self):
+        """
+        Малює ігрову дошку
+        """
         width = len(FIELD[0])
         height = len(FIELD)
 
@@ -68,10 +80,17 @@ class Board:
         додає корабель на ігрову дошку
         '''
         ship_coordinates = ship.get_body()
-        for coordinate_set in ship_coordinates:
-            x = coordinate_set[0]
-            y = coordinate_set[1]
-            self.map[x][y] = 1
+        if check_area(ship):
+            if check_fleet(self):
+                for coordinate_set in ship_coordinates:
+                    x = coordinate_set[0]
+                    y = coordinate_set[1]
+                    self.map[x][y] = 1
+                    self.ships[ship.size] += 1
+            else:
+                raise AssertionError("Перевищено кількість доступних кораблів!")
+        else:
+            raise AssertionError("Ставити тут корабель заборонено!")
 
     def check_hit(self):
         '''
@@ -83,8 +102,13 @@ class Board:
 if __name__ == "__main__":
     board1 = Board()
     board2 = Board()
-    board1.draw_field()
-    board1.add_ship(Ship((2, 3), 1, 4))
-    board1.add_ship(Ship((0, 0), 1, 4))
-    board2.draw_field()
-    window.mainloop()
+    # board1.draw_field()
+    board1.add_ship(Ship((0, 0), 1, 1))
+    board1.add_ship(Ship((2, 2), 1, 1))
+    board1.add_ship(Ship((4, 4), 1, 1))
+    board1.add_ship(Ship((6, 6), 1, 1))
+    board1.add_ship(Ship((8, 8), 1, 1))
+    # board1.add_ship(Ship((9, 9), 0, 1))
+    # board2.draw_field()
+    # window.mainloop()
+    print(board1.ships)
