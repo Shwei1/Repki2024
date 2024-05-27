@@ -3,14 +3,15 @@ from window import window
 from field import field
 import tkinter as tk
 from ship import Ship
-from manager import *
+import copy
+# from manager import *
 
 
 class Board:
     def __init__(self):
         self.window = window
         self.canvas = self.create_canvas()
-        self.map = field
+        self.map = copy.deepcopy(FIELD)
 
         '''
         Відтворює ігрову дошку, розміщує всі кораблі, перевіряє влучення,
@@ -74,6 +75,7 @@ class Board:
                     outline="gray"
                 )
         self.canvas.pack()
+        return self.canvas
 
     def add_ship(self, ship: Ship):
         '''
@@ -98,17 +100,49 @@ class Board:
         '''
         pass
 
+def check_area(ship: Ship):
+    """
+    Перевірка наявності кораблів в околі заданого корабля
+    """
+    fahrwasser = ship.get_area()   # змінна з координатами в околі корабля
+    for coordinate_set in fahrwasser:
+        x, y = coordinate_set[0], coordinate_set[1]
+        if field[x][y] > 0:
+            return False
+    else:
+        return True
+
+
+def fleet_dictionary_manager(dictionary):
+    """
+    Сюди, можливо, перенесеться блок коду, що оновлює словник з кораблями на заданому полі
+    """
+    ...
+    pass
+
+
+def check_fleet(board: Board):
+    for i in range(1, 5):
+        if board.ships[i] >= FLEET[i]:
+            return False
+        else:
+            return True
+    pass
+
+
 
 if __name__ == "__main__":
-    board1 = Board()
+    # board1 = Board()
     board2 = Board()
+    #
+    # board1.add_ship(Ship((0, 0), 1, 1))
+    # board1.add_ship(Ship((2, 2), 1, 1))
+    # board1.add_ship(Ship((4, 4), 1, 1))
+    # board1.add_ship(Ship((6, 6), 1, 1))
+    # # board1.add_ship(Ship((8, 8), 1, 1))
+    # # board1.add_ship(Ship((9, 9), 0, 1))
     # board1.draw_field()
-    board1.add_ship(Ship((0, 0), 1, 1))
-    board1.add_ship(Ship((2, 2), 1, 1))
-    board1.add_ship(Ship((4, 4), 1, 1))
-    board1.add_ship(Ship((6, 6), 1, 1))
-    board1.add_ship(Ship((8, 8), 1, 1))
-    # board1.add_ship(Ship((9, 9), 0, 1))
-    # board2.draw_field()
-    # window.mainloop()
-    print(board1.ships)
+    board2.draw_field()
+    window.mainloop()
+    # print(board1.ships)
+    # print(board2.ships)
