@@ -22,13 +22,20 @@ class Ship:
         '''
         визначає координати, які займає один корабель
         '''
-
         if self.orient == HORIZONTAL:
-            for i in range(self.size):
-                yield (self.start_pos[0], self.start_pos[1] + i)
+            if self.size + self.start_pos[1] <= 10:
+
+                for i in range(self.size):
+                    yield (self.start_pos[0], self.start_pos[1] + i)
+            else:
+                raise AssertionError('Корабель виходить за межі дошки')
+
         else:
-            for i in range(self.size):
-                yield (self.start_pos[0] + i, self.start_pos[1])
+            if self.size + self.start_pos[0] <= 10:
+                for i in range(self.size):
+                    yield (self.start_pos[0] + i, self.start_pos[1])
+            else:
+                raise AssertionError('Корабель виходить за межі дошки')
 
     def get_area(self):
         """"
@@ -46,17 +53,8 @@ class Ship:
             for j in range(y1, y2 + 1):
                 yield (i, j)
 
-    def check_area(self):
-        """
-        Перевіряє, чи немає в get_area вже розміщеного корабля, у разі ствердної відповіді видає булеве значення 0 і виводить
-        помилку а-ля «тут не можна розміщувати корабель».
-        """
-        pass
-
-
 
 if __name__ == '__main__':
-    for x in Ship((1, 1), 1, 4).get_body():
+    for x in Ship((9, 0), 1, 4).get_body():
         print(x)
-    for x in Ship((1, 1), 1, 4).get_area():
-        print(x)
+raise AssertionError('Корабель виходить за межі дошки')
