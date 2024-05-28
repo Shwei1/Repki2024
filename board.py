@@ -63,8 +63,10 @@ class Board:
 
         for i in range(height):
             for j in range(width):
+
                 x1, y1 = j * CELL_SIZE, i * CELL_SIZE
                 x2, y2 = x1 + CELL_SIZE, y1 + CELL_SIZE
+
                 if self.map[i][j] == 0:
                     color = "white"
                 if self.map[i][j] > 0:
@@ -85,8 +87,7 @@ class Board:
         if check_area(ship):
             if check_fleet(self):
                 for coordinate_set in ship_coordinates:
-                    x = coordinate_set[0]
-                    y = coordinate_set[1]
+                    x, y = coordinate_set[0], coordinate_set[1]
                     self.map[x][y] = 1
                     self.ships[ship.size] += 1
             else:
@@ -94,11 +95,10 @@ class Board:
         else:
             raise AssertionError("Ставити тут корабель заборонено!")
 
-    def check_hit(self):
+    def check_hit(self, coords):
         '''
         перевіряє чи стоїть на заданих координатах корабель
         '''
-        pass
 
 def check_area(ship: Ship):
     """
@@ -142,6 +142,16 @@ if __name__ == "__main__":
     # # board1.add_ship(Ship((8, 8), 1, 1))
     # # board1.add_ship(Ship((9, 9), 0, 1))
     # board1.draw_field()
+
+    board1.add_ship(Ship((0, 0), 1, 1))
+    board1.add_ship(Ship((2, 2), 1, 1))
+    board1.add_ship(Ship((4, 4), 1, 1))
+    board1.add_ship(Ship((6, 6), 1, 1))
+    #board1.add_ship(Ship((8, 8), 1, 1))
+    # board1.add_ship(Ship((9, 9), 0, 1))
+    # board2.draw_field()
+    # window.mainloop()
+    print(board1.ships)
     board2.draw_field()
     window.mainloop()
     # print(board1.ships)
