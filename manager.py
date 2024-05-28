@@ -33,6 +33,13 @@ def check_fleet(board: Board):
             return True
     pass
 
+def on_click(event):
+
+    col = event.x // CELL_SIZE
+    row = event.y // CELL_SIZE
+
+    print(f"Clicked on cell: {col}, {row}")
+
 
 
 
