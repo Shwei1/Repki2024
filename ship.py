@@ -57,4 +57,6 @@ class Ship:
 if __name__ == '__main__':
     for x in Ship((9, 0), 1, 4).get_body():
         print(x)
-raise AssertionError('Корабель виходить за межі дошки')
+
+    for x in Ship((1, 1), 1, 4).get_area():
+        print(x)
