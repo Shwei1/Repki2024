@@ -51,12 +51,40 @@ class Ship:
 
         for i in range(x1, x2 + 1):
             for j in range(y1, y2 + 1):
-                yield (i, j)
+                if 0 <= i <= 9 and 0 <= j <= 9:
+                    yield (i, j)
+
+    def get_perimetr(self):
+        '''
+        повертає клітинки тільки навколо корабля
+        '''
+        body = []
+        if self.orient == HORIZONTAL:
+            for i in range(self.size):
+                body.append((self.start_pos[0], self.start_pos[1] + i))
+
+            x1, x2 = self.start_pos[0] - 1, self.start_pos[0] + 1
+            y1, y2 = self.start_pos[1] - 1, self.start_pos[1] + self.size
+        else:
+            for i in range(self.size):
+                body.append((self.start_pos[0] + i, self.start_pos[1]))
+
+            x1, x2 = self.start_pos[0] - 1, self.start_pos[0] + self.size
+            y1, y2 = self.start_pos[1] - 1, self.start_pos[1] + 1
+
+        for i in range(x1, x2 + 1):
+            for j in range(y1, y2 + 1):
+                if (i, j) not in body:
+                    if 0 <= i <= 9 and 0 <= j <= 9:
+                        yield (i, j)
 
 
 if __name__ == '__main__':
-    for x in Ship((9, 0), 1, 4).get_body():
-        print(x)
+    #for x in Ship((0, 9), 1, 4).get_body():
+        #print(x)
 
-    for x in Ship((1, 1), 1, 4).get_area():
+    #for x in Ship((0, 9), 1, 4).get_area():
+        #print(x)
+
+    for x in Ship((0, 9), 1, 4).get_perimetr():
         print(x)
