@@ -21,7 +21,10 @@ class Board:
         '''
 
         self.size = SIZE_BOARD
-        self.ships = {1: 0, 2: 0, 3: 0, 4: 0}
+        self.fleet = {1: 0, 2: 0, 3: 0, 4: 0} # *Перелік* розміщених на полі кораблів
+        self.ships = [] # *Список* розміщених на полі кораблів
+        self.clicked_coords = [] # зберігає натиснуті на дошці координати
+        self.canvas.bind("<Button-1>", lambda event: on_click(event, self))
 
     def create_canvas(self):
         """
@@ -49,8 +52,8 @@ class Board:
 
         return canvas
 
-    def map_bringer(self):
-        return self.map
+    # def map_bringer(self):
+    #     return self.map
 
     def draw_field(self):
         """
@@ -60,6 +63,7 @@ class Board:
         height = len(FIELD)
 
         color = ''
+        self.canvas.delete("all")
 
         for i in range(height):
             for j in range(width):
@@ -71,6 +75,10 @@ class Board:
                     color = "white"
                 if self.map[i][j] > 0:
                     color = "blue"
+                if self.map[i][j] == -1:
+                    color = "gray"
+                if self.map[i][j] == -2:
+                    color = "red"
                 self.canvas.create_rectangle(
                     x1, y1, x2, y2,
                     fill=color,
@@ -89,7 +97,8 @@ class Board:
                 for coordinate_set in ship_coordinates:
                     x, y = coordinate_set[0], coordinate_set[1]
                     self.map[x][y] = 1
-                    self.ships[ship.size] += 1
+                    self.fleet[ship.size] += 1
+                    self.ships.append(ship)
             else:
                 raise AssertionError("Перевищено кількість доступних кораблів!")
         else:
@@ -99,6 +108,7 @@ class Board:
         '''
         перевіряє чи стоїть на заданих координатах корабель
         '''
+
 
 def check_area(ship: Ship):
     """
@@ -123,12 +133,58 @@ def fleet_dictionary_manager(dictionary):
 
 def check_fleet(board: Board):
     for i in range(1, 5):
-        if board.ships[i] >= FLEET[i]:
+        if board.fleet[i] >= FLEET[i]:
             return False
         else:
             return True
     pass
 
+def on_click(event, board):
+
+    col = event.x // CELL_SIZE
+    row = event.y // CELL_SIZE
+    if (row, col) not in board.clicked_coords:
+        board.clicked_coords.append((row, col))
+    check_hit((row, col), board)
+    check_submerged_ships(board)
+    board.draw_field()
+    print(f"Clicked on cell: {row}, {col}")
+    print(f"tiles clicked so far:{board.clicked_coords}")
+
+
+def check_hit(event: tuple, board: Board):
+    x = event[0]
+    y = event[1]
+    if board.map[x][y] == 1:
+        board.map[x][y] = -2
+    elif board.map[x][y] == 0:
+        board.map[x][y] = -1
+    else:
+        print("бос ви сюда вже стрілялі")
+
+
+def check_submerged_ships(board: Board):
+    for ship in board.ships:
+        # assert type(ship) == Ship
+        ship_coords = []
+        for coord_pair in ship.get_body():
+            ship_coords.append(coord_pair)
+        is_subset = all(item in board.clicked_coords for item in ship_coords)
+        print(f"criterion: {is_subset}")
+        print(f"ship coordinates: {ship_coords}")
+        if is_subset:
+            for (x, y) in ship.get_area():
+                if (x, y) not in ship.get_body():
+                    board.map[x][y] = -1
+
+
+
+
+
+
+
+
+# todo: Функція, яка повертає виключно коорди довкола корабля
 
 
 if __name__ == "__main__":
