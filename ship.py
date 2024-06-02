@@ -54,7 +54,7 @@ class Ship:
                 if 0 <= i <= 9 and 0 <= j <= 9:
                     yield (i, j)
 
-    def get_perimetr(self):
+    def get_perimeter(self):
         '''
         повертає клітинки тільки навколо корабля
         '''
@@ -86,5 +86,5 @@ if __name__ == '__main__':
     #for x in Ship((0, 9), 1, 4).get_area():
         #print(x)
 
-    for x in Ship((0, 9), 1, 4).get_perimetr():
+    for x in Ship((0, 9), 1, 4).get_perimeter():
         print(x)

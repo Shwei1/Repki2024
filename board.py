@@ -139,6 +139,7 @@ def check_fleet(board: Board):
             return True
     pass
 
+
 def on_click(event, board):
 
     col = event.x // CELL_SIZE
