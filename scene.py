@@ -1,4 +1,5 @@
- from tkinter import *
+
+from tkinter import *
 
 class SeaBattleApp:
     def __init__(self, root):
@@ -11,12 +12,16 @@ class SeaBattleApp:
         c.pack()
 
         # Прямокутник для "SEA BATTLE"
-        margin_x = 0.05
-        margin_y = 0.1
-        c.create_rectangle(margin_x * 750, margin_y * 700, (1 - margin_x) * 750, 0.25 * 700)
+
+        rect_x0 = 0.2
+        rect_y0 = 0.1
+        rect_x1 = 0.8
+        rect_y1 = 0.3
+        c.create_rectangle(rect_x0 * 750, rect_y0 * 700, rect_x1 * 750, rect_y1 * 700)
 
         # Текст "SEA BATTLE"
-        c.create_text(0.5 * 750, 0.15 * 700,
+        c.create_text(0.5 * 750, (rect_y0 + rect_y1) / 2 * 700,
+
                       text="SEA BATTLE",
                       justify=CENTER,
                       font="Verdana 50")
@@ -36,7 +41,7 @@ class SeaBattleApp:
             font="Verdana 15",
             command=self.open_username_window)
 
-        button_start.place(relx=0.5, rely=0.7, anchor=CENTER)
+        button_start.place(relx=0.5, rely=0.65, anchor=CENTER)
 
         # Автори
         c.create_text(0.71 * 750, 0.96 * 700,
@@ -76,4 +81,5 @@ class SeaBattleApp:
 if __name__ == "__main__":
     root = Tk()
     app = SeaBattleApp(root)
+
     root.mainloop()
