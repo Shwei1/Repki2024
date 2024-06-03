@@ -2,7 +2,7 @@ from window import window
 from constants import *
 from ship import Ship
 from field import field
-from board import Board
+from old_board import Board
 
 def check_area(ship: Ship):
     """

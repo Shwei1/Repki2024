@@ -1,23 +1,16 @@
 from constants import *
 from ship import Ship
 from new_manager import *
+from copy import deepcopy
 
 
 class Board:
-
-    def __init__(self, map):
-        '''
-        Відтворює ігрову дошку гравця i бота
-        '''
-        self.map = map
+    def __init__(self, field: list):
+        self.field = deepcopy(field)
         self.ships = [0, 0, 0, 0]
         self.fleet = {1: 0, 2: 0, 3: 0, 4: 0}
 
     def add_ship(self, ship: Ship):
-        '''
-        додає корабель на ігрову дошку,
-        викликає метод, який заповнює периметр
-        '''
         ship_coordinates = ship.get_body()
         if check_area(ship, self.map):
             for coordinate_set in ship_coordinates:
@@ -31,9 +24,6 @@ class Board:
         self.points(ship)
 
     def points(self, ship: Ship):
-        '''
-        позначає на дошці заборонені коорди
-        '''
         perimeter = ship.get_perimeter()
         for coord in perimeter:
             x, y = coord[0], coord[1]

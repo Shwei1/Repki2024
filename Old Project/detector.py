@@ -1,4 +1,4 @@
-from board import Board
+from old_board import Board
 from constants import *
 from window import window
 

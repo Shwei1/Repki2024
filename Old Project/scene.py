@@ -1,5 +1,5 @@
-
 from tkinter import *
+
 
 class SeaBattleApp:
     def __init__(self, root):
@@ -76,7 +76,8 @@ class SeaBattleApp:
 
         Label(game_window, text=f"Welcome, {username}!",
               font="Verdana 30").place(relx=0.5, rely=0.1, anchor=CENTER)
-        # Тут можна додати код для самої гри
+        # тут має бути команда ініціалізації відмалювання ігрових дошок.
+
 
 if __name__ == "__main__":
     root = Tk()

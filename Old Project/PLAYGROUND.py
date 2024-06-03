@@ -1,5 +1,5 @@
-import board
-from board import Board
+import old_board
+from old_board import Board
 from ship import Ship
 from detector import on_click
 from window import window

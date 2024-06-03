@@ -1,12 +1,3 @@
-import copy
-
-HORIZONTAL = 0
-VERTICAL = 1
-
-CELL_SIZE = 35
-
-SIZE_BOARD = 10
-
 FIELD = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -16,11 +7,17 @@ FIELD = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         ]
 
-VIRTUAL_FIELD = copy.deepcopy(FIELD)
-BOT_FIELD = copy.deepcopy(FIELD)
-VIRTUAL_BOT = copy.deepcopy(FIELD)
+FIELD_SIZE = 10
+CELL_SIZE = 40
+
+HORIZONTAL = 0
+VERTICAL = 1
+
+LEFT_CLICK = 1
+RIGHT_CLICK = 3
 
 FLEET = {
     1: 4,
@@ -28,5 +25,3 @@ FLEET = {
     3: 2,
     4: 1
 }
-
-BOT_FLEET = copy.deepcopy(FLEET)
